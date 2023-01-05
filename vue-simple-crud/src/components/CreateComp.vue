@@ -14,8 +14,8 @@
 
         <button 
             type="button"
-            @click="onClickCreate">
-            작성
+            @click="isUpdate ? onClickUpdate() : onClickCreate()">
+            {{ isUpdate ? '수정' : '작성' }}
         </button>
     </div>
 </template>
@@ -27,6 +27,8 @@
         name: 'CreateComp',
         data() {
             return {
+                seq: -1,
+                isUpdate: false,
                 params: {
                     writer: '',
                     title: '',
@@ -35,7 +37,11 @@
             }
         },
         mounted() {
-            
+            if(this.$route.params.seq) {
+                this.seq = Number(this.$route.params.seq);
+                this.isUpdate = true;
+                this.params = data.find(item => item.seq === this.seq);
+            }
         },
         methods: {
             onClickCreate() {
@@ -46,6 +52,11 @@
                     title: this.params.title,
                     content: this.params.content
                 });
+                this.$router.push('/');
+            },
+            onClickUpdate() {
+                const index = data.findIndex(item => item.seq === this.seq);
+                data[index] = this.params;
                 this.$router.push('/');
             }
         }

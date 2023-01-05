@@ -6,7 +6,8 @@
         <p>내용 : {{ detail.content }}</p>
 
         <button
-            type="button">
+            type="button"
+            @click="onClickUpdate">
             수정
         </button>
         <button
@@ -33,6 +34,9 @@
             this.detail = data.find(item => item.seq === this.seq);
         },
         methods: {
+            onClickUpdate() {
+                this.$router.push(`/create/${this.seq}`);
+            },
             onClickDelete() {
                 const index = data.findIndex(item => item.seq === this.seq);
                 data.splice(index, 1);

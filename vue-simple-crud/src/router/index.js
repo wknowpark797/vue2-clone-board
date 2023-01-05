@@ -16,7 +16,7 @@ const router = new VueRouter({
             component: () => import(/* webpackChunkName: 'read' */ '@/components/ReadComp')
         },
         {
-            path: '/create',
+            path: '/create/:seq?',
             name: 'create',
             component: () => import(/* webpackChunkName: 'create' */ '@/components/CreateComp')
         },
