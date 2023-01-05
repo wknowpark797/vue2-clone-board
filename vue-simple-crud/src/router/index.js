@@ -8,7 +8,12 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            redirect: '/'
+            redirect: '/read'
+        },
+        {
+            path: '/read',
+            name: 'read',
+            component: () => import(/* webpackChunkName: 'read' */ '@/components/ReadComp')
         }
     ]
 })
