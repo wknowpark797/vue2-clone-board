@@ -14,6 +14,11 @@ const router = new VueRouter({
             path: '/read',
             name: 'read',
             component: () => import(/* webpackChunkName: 'read' */ '@/components/ReadComp')
+        },
+        {
+            path: '/create',
+            name: 'create',
+            component: () => import(/* webpackChunkName: 'create' */ '@/components/CreateComp')
         }
     ]
 })

@@ -20,7 +20,8 @@
         </table>
 
         <button 
-            type="button">
+            type="button"
+            @click="$router.push('/create')">
             글쓰기
         </button>
     </div>
