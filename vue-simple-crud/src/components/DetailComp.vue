@@ -10,7 +10,8 @@
             수정
         </button>
         <button
-            type="button">
+            type="button"
+            @click="onClickDelete">
             삭제
         </button>
     </div>
@@ -32,7 +33,11 @@
             this.detail = data.find(item => item.seq === this.seq);
         },
         methods: {
-            
+            onClickDelete() {
+                const index = data.findIndex(item => item.seq === this.seq);
+                data.splice(index, 1);
+                this.$router.push('/');
+            }
         }
     }
 </script>
