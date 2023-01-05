@@ -19,6 +19,11 @@ const router = new VueRouter({
             path: '/create',
             name: 'create',
             component: () => import(/* webpackChunkName: 'create' */ '@/components/CreateComp')
+        },
+        {
+            path: '/detail/:seq',
+            name: 'detail',
+            component: () => import(/* webpackChunkName: 'detail' */ '@/components/DetailComp')
         }
     ]
 })

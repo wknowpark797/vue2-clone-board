@@ -11,7 +11,8 @@
             <tbody>
                 <tr 
                     v-for="item in data"
-                    :key="item.seq">
+                    :key="item.seq"
+                    @click="$router.push(`/detail/${item.seq}`)">
                     <td>{{ item.writer }}</td>
                     <td>{{ item.title }}</td>
                     <td>{{ item.content }}</td>
