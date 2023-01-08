@@ -27,6 +27,7 @@
 		padding: 20px;
 		.view-content {
 			flex: 1;
+			padding: 20px;
 			margin-left: 20px;
 		}
 	}
