@@ -8,7 +8,12 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            redirect: '/'
+            redirect: '/board/free'
+        },
+        {
+            path: '/board/free',
+            name: 'board-free',
+            component: () => import(/* webpackChunkName: 'board' */ '@/components/BoardComp')
         }
     ]
 })
