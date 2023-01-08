@@ -33,16 +33,20 @@
         <v-card 
             class="comment-wrap"
             color="#eee">
-            댓글 영역
+            <CommentList :contentId="contentId" />
         </v-card>
     </div>
 </template>
 
 <script>
     import data from '@/data';
+    import CommentList from '@/components/CommentList';
 
     export default {
         name: 'DetailComp',
+        components: {
+            CommentList
+        },
         data() {
             return {
                 contentId: -1,
