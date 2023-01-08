@@ -19,7 +19,8 @@
 
         <v-btn 
             elevation="2"
-            color="primary">
+            color="primary"
+            @click="$router.push(`/board/create/${contentId}`)">
             수정
         </v-btn>
         <v-btn 

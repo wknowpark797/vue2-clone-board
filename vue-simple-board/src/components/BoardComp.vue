@@ -27,7 +27,8 @@
         </v-simple-table>
 
         <v-btn 
-            elevation="2">
+            elevation="2"
+            @click="$router.push('/board/create')">
             글작성
         </v-btn>
     </div>
