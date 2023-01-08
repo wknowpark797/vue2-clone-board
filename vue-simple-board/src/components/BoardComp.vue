@@ -12,12 +12,15 @@
                 </thead>
                 <tbody>
                     <tr
-                    v-for="item in contentList"
-                    :key="item.contentId">
+                        v-for="item in contentList"
+                        :key="item.contentId"
+                        @click="$router.push(`/board/detail/${item.contentId}`)">
+
                         <td>{{ item.contentId }}</td>
                         <td>{{ item.title }}</td>
                         <td>{{ item.createdAt }}</td>
                         <td>{{ item.userName }}</td>
+                    
                     </tr>
                 </tbody>
             </template>

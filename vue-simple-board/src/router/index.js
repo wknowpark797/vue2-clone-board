@@ -14,6 +14,11 @@ const router = new VueRouter({
             path: '/board/free',
             name: 'board-free',
             component: () => import(/* webpackChunkName: 'board' */ '@/components/BoardComp')
+        },
+        {
+            path: '/board/detail/:contentId',
+            name: 'board-detail',
+            component: () => import(/* webpackChunkName: 'detail' */ '@/components/DetailComp')
         }
     ]
 })
