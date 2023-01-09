@@ -8,7 +8,9 @@
 
         </div>
 
-        <CommentCreate :contentId="contentId" />
+        <CommentCreate 
+            :contentId="contentId"
+            :loadCommentList="loadCommentList" />
     </div>
 </template>
 
@@ -33,11 +35,13 @@
         },
         mounted() {
             this.$nextTick(() => {
-                this.commentList = data.Comment.filter(item => item.contentId === this.contentId);
+                this.loadCommentList();
             })
         },
         methods: {
-            
+            loadCommentList() {
+                this.commentList = data.Comment.filter(item => item.contentId === this.contentId);
+            }
         }
     }
 </script>

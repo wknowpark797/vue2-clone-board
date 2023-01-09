@@ -22,7 +22,8 @@
     export default {
         name: 'CommentCreate',
         props: {
-            contentId: Number
+            contentId: Number,
+            loadCommentList: Function
         },
         data() {
             return {
@@ -37,7 +38,7 @@
         },
         methods: {
             onClickCreate() {
-                const lastComment = data.Comment.sort((a, b) => b.commentId - a.commentId)[0];
+                const lastComment = data.Comment.sort((a, b) => { return b.commentId - a.commentId })[0];
                 const newId = lastComment.commentId + 1;
                 
                 data.Comment.push({
@@ -48,6 +49,8 @@
                     createdAt: '2023-01-08 15:11:20',
                     updatedAt: null
                 })
+                this.loadCommentList();
+                this.params.comment = '';
             }
         }
     }
