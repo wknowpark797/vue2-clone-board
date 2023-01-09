@@ -19,29 +19,91 @@
                     small>
                     삭제
                 </v-btn>
+                <v-btn 
+                    elevation="2"
+                    small
+                    @click="subCommentToggle">
+                    댓글 달기
+                </v-btn>
             </v-col>
-        </v-row>        
+        </v-row>
+        <div
+            class="sub-create-wrap" 
+            v-if="subCommentCreateToggle">
+            <CommentCreate 
+                :isSubComment="true"
+                :commentId="comment.commentId"
+                :loadSubCommentList="loadSubCommentList"
+                :subCommentToggle="subCommentToggle" />
+        </div>
+
+        <div 
+            class="sub-comment-wrap" 
+            v-if="subCommentList.length > 0">
+            <v-row 
+                v-for="sub in subCommentList"
+                :key="sub.subcommentId">
+                <v-col>
+                    {{ sub.userName }}
+                    <br>{{ sub.createdAt }}
+                </v-col>
+                <v-col>
+                    {{ sub.subcomment }}
+                </v-col>
+                <v-col>
+                    <v-btn 
+                        elevation="2"
+                        small>
+                        수정
+                    </v-btn>
+                    <v-btn 
+                        elevation="2"
+                        small>
+                        삭제
+                    </v-btn>
+                </v-col>
+            </v-row>
+        </div>
     </div>
 </template>
 
 <script>
     import data from '@/data';
+    import CommentCreate from '@/components/CommentCreate';
 
     export default {
         name: 'CommentItem',
+        components: {
+            CommentCreate
+        },
         props: {
             comment: Object
         },
         data() {
             return {
-                userName: ''
+                userName: '',
+                subCommentList: [],
+                subCommentCreateToggle: false
             }
         },
         mounted() {
             this.userName = data.User.find(item => item.userId === this.comment.userId).name;
+            this.loadSubCommentList();
         },
         methods: {
-            
+            subCommentToggle() {
+                this.subCommentCreateToggle = !this.subCommentCreateToggle;
+            },
+            loadSubCommentList() {
+                this.subCommentList = data.SubComment.filter(
+                    item => item.commentId === this.comment.commentId
+                ).map(subCommentItem => {
+                    return {
+                        ...subCommentItem,
+                        userName: data.User.find(userItem => userItem.userId === subCommentItem.userId).name
+                    }
+                })
+            }
         }
     }
 </script>
@@ -49,5 +111,15 @@
 <style lang="scss" scoped>
     .v-btn {
         margin-right: 10px;
+    }
+    .sub-comment-wrap {
+        background: #c7c7c7;
+        padding: 15px;
+        margin: 10px 15px 15px;
+    }
+    .sub-create-wrap {
+        background: #c7c7c7;
+        padding: 15px;
+        margin: 10px 15px 15px;
     }
 </style>

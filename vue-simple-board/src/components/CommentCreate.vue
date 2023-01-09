@@ -10,7 +10,7 @@
         <v-btn
             elevation="2"
             color="success"
-            @click="onClickCreate">
+            @click="isSubComment ? onClickSubCreate() : onClickCreate()">
             작성하기
         </v-btn>
     </div>
@@ -23,7 +23,11 @@
         name: 'CommentCreate',
         props: {
             contentId: Number,
-            loadCommentList: Function
+            loadCommentList: Function,
+            isSubComment: Boolean,
+            commentId: Number,
+            loadSubCommentList: Function,
+            subCommentToggle: Function
         },
         data() {
             return {
@@ -51,6 +55,22 @@
                 })
                 this.loadCommentList();
                 this.params.comment = '';
+            },
+            onClickSubCreate() {
+                const lastComment = data.SubComment.sort((a, b) => { return b.subcommentId - a.subcommentId })[0];
+                const newId = lastComment.subcommentId + 1;
+
+                data.SubComment.push({
+                    subcommentId: newId,
+                    commentId: this.commentId,
+                    userId: 1,
+                    subcomment: this.params.comment,
+                    createdAt: '2023-01-08 15:11:20',
+                    updatedAt: null
+                })
+                this.subCommentToggle();
+                this.loadSubCommentList();
+                this.params.comment = '';
             }
         }
     }
@@ -58,8 +78,6 @@
 
 <style lang="scss" scoped>
     .comment-create {
-        padding-top: 20px;
-        margin-top: 20px;
-        border-top: 1px solid #cacaca;
+        margin-top: 15px;
     }
 </style>
