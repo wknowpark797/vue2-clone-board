@@ -29,7 +29,7 @@
         <v-btn 
             elevation="2"
             @click="$router.push('/board/create')">
-            글작성
+            글쓰기
         </v-btn>
     </div>
 </template>
@@ -41,7 +41,8 @@
         name: 'BoardComp',
         computed: {
             contentList() {
-                let items = data.Content.sort((a, b) => b.contentId - a.contentId);
+                let items = data.Content.sort((a, b) => { return b.contentId - a.contentId });
+
                 items = items.map(contentItem => {
                     return {
                         ...contentItem,

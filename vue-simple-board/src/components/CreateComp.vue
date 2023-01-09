@@ -55,7 +55,7 @@
         },
         methods: {
             onClickCreate() {
-                const lastContent = data.Content.sort((a, b) => b.contentId - a.contentId)[0];
+                const lastContent = data.Content.sort((a, b) => { return b.contentId - a.contentId })[0];
                 const newId = lastContent.contentId + 1;
 
                 data.Content.push({
