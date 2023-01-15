@@ -15,9 +15,10 @@
 </template>
 
 <script>
-    import data from '@/data';
+    // import data from '@/data';
     import CommentItem from '@/components/CommentItem';
     import CommentCreate from '@/components/CommentCreate';
+    import { findComment } from '@/service';
 
     export default {
         name: 'CommentList',
@@ -39,8 +40,12 @@
             })
         },
         methods: {
-            loadCommentList() {
-                this.commentList = data.Comment.filter(item => item.contentId === this.contentId);
+            async loadCommentList() {
+                // this.commentList = data.Comment.filter(item => item.contentId === this.contentId);
+                const result = await findComment({
+                    contentId: this.contentId
+                });
+                this.commentList = result.data;
             }
         }
     }

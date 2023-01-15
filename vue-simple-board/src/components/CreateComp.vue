@@ -30,7 +30,8 @@
 </template>
 
 <script>
-    import data from '@/data';
+    // import data from '@/data';
+    import { findContent, addContent, modifyContent } from '@/service';
 
     export default {
         name: 'CreateComp',
@@ -45,17 +46,21 @@
                 contentId: -1
             }
         },
-        mounted() {
+        async mounted() {
             if(this.$route.params.contentId) {
                 this.contentId = Number(this.$route.params.contentId);
                 this.isUpdate = true;
 
-                this.params = data.Content.find(item => item.contentId === this.contentId);
+                // this.params = data.Content.find(item => item.contentId === this.contentId);
+                const result = await findContent({
+                    contentId: this.contentId
+                });
+                this.params = result.data;
             }
         },
         methods: {
-            onClickCreate() {
-                const lastContent = data.Content.sort((a, b) => { return b.contentId - a.contentId })[0];
+            async onClickCreate() {
+                /*const lastContent = data.Content.sort((a, b) => { return b.contentId - a.contentId })[0];
                 const newId = lastContent.contentId + 1;
 
                 data.Content.push({
@@ -65,14 +70,27 @@
                     content : this.params.content,
                     createdAt: '2023-01-08 13:11:20',
                     updatedAt: null
-                })
+                })*/
+
+                await addContent({
+                    userId: 1,
+                    title: this.params.title,
+                    content : this.params.content
+                });
 
                 this.$router.push('/');
+
             },
-            onClickUpdate() {
-                const item = data.Content.find(item => item.contentId === this.contentId);
+            async onClickUpdate() {
+                /*const item = data.Content.find(item => item.contentId === this.contentId);
                 item.title = this.params.title;
-                item.content = this.params.content;
+                item.content = this.params.content;*/
+
+                await modifyContent({
+                    contentId: this.contentId, 
+                    title: this.params.title,
+                    content : this.params.content
+                });
 
                 this.$router.push('/');
             }

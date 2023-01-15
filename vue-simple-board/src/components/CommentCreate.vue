@@ -17,7 +17,8 @@
 </template>
 
 <script>
-    import data from '@/data';
+    // import data from '@/data';
+    import { addComment, addSubComment } from '@/service';
 
     export default {
         name: 'CommentCreate',
@@ -34,15 +35,15 @@
                 params: {
                     comment: ''
                 },
-                userName: '신짱구'
+                userName: 'wooara'
             }
         },
         mounted() {
             
         },
         methods: {
-            onClickCreate() {
-                const lastComment = data.Comment.sort((a, b) => { return b.commentId - a.commentId })[0];
+            async onClickCreate() {
+                /*const lastComment = data.Comment.sort((a, b) => { return b.commentId - a.commentId })[0];
                 const newId = lastComment.commentId + 1;
                 
                 data.Comment.push({
@@ -52,12 +53,19 @@
                     comment: this.params.comment,
                     createdAt: '2023-01-08 15:11:20',
                     updatedAt: null
+                })*/
+
+                await addComment({
+                    userId: 1,
+                    contentId: this.contentId,
+                    comment: this.params.comment
                 })
+
                 this.loadCommentList();
                 this.params.comment = '';
             },
-            onClickSubCreate() {
-                const lastComment = data.SubComment.sort((a, b) => { return b.subcommentId - a.subcommentId })[0];
+            async onClickSubCreate() {
+                /*const lastComment = data.SubComment.sort((a, b) => { return b.subcommentId - a.subcommentId })[0];
                 const newId = lastComment.subcommentId + 1;
 
                 data.SubComment.push({
@@ -67,7 +75,14 @@
                     subcomment: this.params.comment,
                     createdAt: '2023-01-08 15:11:20',
                     updatedAt: null
-                })
+                })*/
+
+                await addSubComment({
+                    commentId: this.commentId,
+                    userId: 1,
+                    subcomment: this.params.comment
+                });
+
                 this.subCommentToggle();
                 this.loadSubCommentList();
                 this.params.comment = '';

@@ -2,8 +2,8 @@
     <div>
         <v-row>
             <v-col>
-                {{ userName }}
-                <br>{{ comment.createdAt }}
+                {{ comment.user_name }}
+                <br>{{ comment.created_at }}
             </v-col>
             <v-col>
                 {{ comment.comment }}
@@ -32,7 +32,7 @@
             v-if="subCommentCreateToggle">
             <CommentCreate 
                 :isSubComment="true"
-                :commentId="comment.commentId"
+                :commentId="comment.comment_id"
                 :loadSubCommentList="loadSubCommentList"
                 :subCommentToggle="subCommentToggle" />
         </div>
@@ -42,10 +42,10 @@
             v-if="subCommentList.length > 0">
             <v-row 
                 v-for="sub in subCommentList"
-                :key="sub.subcommentId">
+                :key="sub.subcomment_id">
                 <v-col>
-                    {{ sub.userName }}
-                    <br>{{ sub.createdAt }}
+                    {{ sub.user_name }}
+                    <br>{{ sub.created_at }}
                 </v-col>
                 <v-col>
                     {{ sub.subcomment }}
@@ -68,8 +68,9 @@
 </template>
 
 <script>
-    import data from '@/data';
+    // import data from '@/data';
     import CommentCreate from '@/components/CommentCreate';
+    import { findSubComment } from '@/service';
 
     export default {
         name: 'CommentItem',
@@ -87,22 +88,27 @@
             }
         },
         mounted() {
-            this.userName = data.User.find(item => item.userId === this.comment.userId).name;
+            // this.userName = data.User.find(item => item.userId === this.comment.userId).name;
             this.loadSubCommentList();
         },
         methods: {
             subCommentToggle() {
                 this.subCommentCreateToggle = !this.subCommentCreateToggle;
             },
-            loadSubCommentList() {
-                this.subCommentList = data.SubComment.filter(
+            async loadSubCommentList() {
+                /*this.subCommentList = data.SubComment.filter(
                     item => item.commentId === this.comment.commentId
                 ).map(subCommentItem => {
                     return {
                         ...subCommentItem,
                         userName: data.User.find(userItem => userItem.userId === subCommentItem.userId).name
                     }
-                })
+                })*/
+
+                const result = await findSubComment({
+                    commentId: this.comment.comment_id
+                });
+                this.subCommentList = result.data;
             }
         }
     }

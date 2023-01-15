@@ -6,8 +6,8 @@
                     <v-col>{{ contentId }}</v-col>
                     <v-col>{{ contentDetail.title }}</v-col>
                     <v-col>
-                        글쓴이 : {{ userName }}
-                        <br>등록일 : {{ contentDetail.createdAt }}
+                        글쓴이 : {{ contentDetail.user_name }}
+                        <br>등록일 : {{ contentDetail.created_at }}
                     </v-col>
                 </v-row>
             </v-card-text>
@@ -39,8 +39,9 @@
 </template>
 
 <script>
-    import data from '@/data';
+    // import data from '@/data';
     import CommentList from '@/components/CommentList';
+    import { findContent, deleteContent } from '@/service';
 
     export default {
         name: 'DetailComp',
@@ -50,19 +51,28 @@
         data() {
             return {
                 contentId: -1,
-                contentDetail: {},
-                userName: ''
+                contentDetail: {}
             }
         },
-        mounted() {
+        async mounted() {
             this.contentId = Number(this.$route.params.contentId);
-            this.contentDetail = data.Content.find(item => item.contentId === this.contentId);
-            this.userName = data.User.find(item => item.userId === this.contentDetail.userId).name;
+            /*this.contentDetail = data.Content.find(item => item.contentId === this.contentId);
+            this.userName = data.User.find(item => item.userId === this.contentDetail.userId).name;*/
+
+            const result = await findContent({
+                contentId: this.contentId
+            });
+            this.contentDetail = result.data;
         },
         methods: {
-            onClickDelete() {
-                const index = data.Content.findIndex(item => item.contentId === this.contentId);
-                data.Content.splice(index, 1);
+            async onClickDelete() {
+                /*const index = data.Content.findIndex(item => item.contentId === this.contentId);
+                data.Content.splice(index, 1);*/
+
+                await deleteContent({
+                    contentId: this.contentId
+                });
+
                 this.$router.push('/');
             }
         }

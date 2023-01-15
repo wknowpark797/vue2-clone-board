@@ -13,13 +13,13 @@
                 <tbody>
                     <tr
                         v-for="item in contentList"
-                        :key="item.contentId"
-                        @click="$router.push(`/board/detail/${item.contentId}`)">
+                        :key="item.content_id"
+                        @click="$router.push(`/board/detail/${item.content_id}`)">
 
-                        <td>{{ item.contentId }}</td>
+                        <td>{{ item.content_id }}</td>
                         <td>{{ item.title }}</td>
-                        <td>{{ item.createdAt }}</td>
-                        <td>{{ item.userName }}</td>
+                        <td>{{ item.created_at }}</td>
+                        <td>{{ item.user_name }}</td>
                     
                     </tr>
                 </tbody>
@@ -35,12 +35,13 @@
 </template>
 
 <script>
-    import data from '@/data';
+    // import data from '@/data';
+    import { findContentList } from '@/service';
 
     export default {
         name: 'BoardComp',
         computed: {
-            contentList() {
+            /*contentList() {
                 let items = data.Content.sort((a, b) => { return b.contentId - a.contentId });
 
                 items = items.map(contentItem => {
@@ -50,15 +51,16 @@
                     }
                 })
                 return items;
-            }
+            }*/
         },
         data() {
             return {
-                
+                contentList: []
             }
         },
-        mounted() {
-            
+        async mounted() {
+            const result = await findContentList();
+            this.contentList = result.data;
         },
         methods: {
             
