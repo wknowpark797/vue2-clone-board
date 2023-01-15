@@ -42,13 +42,13 @@
             v-if="subCommentList.length > 0">
             <v-row 
                 v-for="sub in subCommentList"
-                :key="sub.subcomment_id">
+                :key="sub.sub_comment_id">
                 <v-col>
                     {{ sub.user_name }}
                     <br>{{ sub.created_at }}
                 </v-col>
                 <v-col>
-                    {{ sub.subcomment }}
+                    {{ sub.sub_comment }}
                 </v-col>
                 <v-col>
                     <v-btn 
@@ -82,7 +82,6 @@
         },
         data() {
             return {
-                userName: '',
                 subCommentList: [],
                 subCommentCreateToggle: false
             }
